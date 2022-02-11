@@ -6,6 +6,12 @@ import * as Font from 'expo-font';
 import image from '../assets/background-img.png';
 import icon from '../assets/icon.png';
 
+  // bgColors selection
+  const BLACK = '#090c08',
+    PURPLE = '#474056',
+    GRAY = '#8a95a5',
+    GREEN = '#b9c6ae';
+
 export default class Start extends React.Component {
   constructor(props) {
     super(props);
@@ -13,9 +19,9 @@ export default class Start extends React.Component {
     // the state will be update with whatever values change for the specific state
     this.state = {
       name: '',
-      bgColor: '',
+      bgColor: BLACK,
       fontsLoaded: false,
-      active: null
+      active: null,
     };
   }
 
@@ -40,14 +46,6 @@ export default class Start extends React.Component {
     this.setState({bgColor: newColor});
   };
 
-  // bgColors selection
-  color = {
-    black: '#090c08',
-    purple: '#474056',
-    gray: '#8a95a5',
-    green: '#b9c6ae'
-  };
-
   render() {
     if (this.state.fontsLoaded) {
     return (
@@ -69,18 +67,18 @@ export default class Start extends React.Component {
 
               <View style={styles.colorView}>
                 <Text style={styles.colorText}>Choose Background Color:</Text>
-                <View style={styles.colorButtons}>
-                  <TouchableOpacity style={this.state.active === 0 ? styles.blackActive : styles.black} 
-                    onPress={() => {this.changeBgColor(this.color.black); this.setState({active: 0})}}>
+                <View style={styles.colorButtonView}>
+                  <TouchableOpacity style={this.state.active === 0 ? [styles.black, styles.buttonActive] : [styles.black, styles.buttonColor]}
+                    onPress={() => {this.changeBgColor(BLACK); this.setState({active: 0})}}>
                   </TouchableOpacity>
-                  <TouchableOpacity style={this.state.active === 1 ? styles.purpleActive : styles.purple} 
-                    onPress={() => {this.changeBgColor(this.color.purple); this.setState({active: 1})}}>
+                  <TouchableOpacity style={this.state.active === 1 ? [styles.purple, styles.buttonActive] : [styles.purple, styles.buttonColor]} 
+                    onPress={() => {this.changeBgColor(PURPLE); this.setState({active: 1})}}>
                   </TouchableOpacity>
-                  <TouchableOpacity style={this.state.active === 2 ? styles.grayActive : styles.gray} 
-                    onPress={() => {this.changeBgColor(this.color.gray); this.setState({active: 2})}}>
+                  <TouchableOpacity style={this.state.active === 2 ? [styles.gray, styles.buttonActive] : [styles.gray, styles.buttonColor]} 
+                    onPress={() => {this.changeBgColor(GRAY); this.setState({active: 2})}}>
                   </TouchableOpacity>
-                  <TouchableOpacity style={this.state.active === 3 ? styles.greenActive : styles.green} 
-                    onPress={() => {this.changeBgColor(this.color.green); this.setState({active: 3})}}>
+                  <TouchableOpacity style={this.state.active === 3 ? [styles.green, styles.buttonActive] : [styles.green, styles.buttonColor]} 
+                    onPress={() => {this.changeBgColor(GREEN); this.setState({active: 3})}}>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -160,19 +158,17 @@ const styles = StyleSheet.create({
     opacity: 1,
     paddingBottom: 5
   },
-  colorButtons: {
+  colorButtonView: {
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
-  black: {
-    backgroundColor: '#090c08',
+  buttonColor: {
     borderRadius: 100,
     padding: 10,
     width: 40,
     height: 40
   },
-  blackActive: {
-    backgroundColor: '#090c08',
+  buttonActive: {
     borderRadius: 100,
     padding: 10,
     width: 40,
@@ -180,53 +176,17 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#d62727',
   },
+  black: {
+    backgroundColor: '#090c08',
+  },
   purple: {
     backgroundColor: '#474056',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40
-  },
-  purpleActive: {
-    backgroundColor: '#474056',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40,
-    borderWidth: 3,
-    borderColor: '#d62727'
   },
   gray: {
     backgroundColor: '#8a95a5',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40
-  },
-  grayActive: {
-    backgroundColor: '#8a95a5',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40,
-    borderWidth: 3,
-    borderColor: '#d62727'
   },
   green: {
     backgroundColor: '#b9c6ae',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40
-  },
-  greenActive: {
-    backgroundColor: '#b9c6ae',
-    borderRadius: 100,
-    padding: 10,
-    width: 40,
-    height: 40,
-    borderWidth: 3,
-    borderColor: '#d62727'
   },
 
   button: {
@@ -234,7 +194,7 @@ const styles = StyleSheet.create({
     width: '88%',
     height: 50,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonTxt: {
     fontFamily: 'Poppins-SemiBold',
