@@ -21,7 +21,7 @@ export default class Chat extends React.Component {
     this.setState({fontsLoaded: true});
   }
 
-  // add first message
+  
   componentDidMount() {
     // selected name from Start gets displayed
     let name = this.props.route.params.name;
@@ -29,12 +29,13 @@ export default class Chat extends React.Component {
 
     this.loadFonts();
 
+    // add first message
     this.setState({
       messages: [
         {
           _id: 1,
-          text: 'Welcome ' + name,
-          createAt: new Date(),
+          text: 'Hi ' + name + ' 👋😊',
+          createdAt: new Date(),
           user: {
             _id: 2,
             name: 'React Native',
@@ -44,7 +45,7 @@ export default class Chat extends React.Component {
         {
           _id: 2,
           text: name + ' has entered the chat',
-          createAt: new Date(),
+          createdAt: new Date(),
           system: true,
         },
       ],
@@ -58,14 +59,27 @@ export default class Chat extends React.Component {
       {...props}
       wrapperStyle={{
         right: {
-          backgroundColor: '#f6d8ae'
+          backgroundColor: '#f6d8ae',
+          padding: 6,
+          borderBottomRightRadius: 0,
+          borderBottomLeftRadius: 30,
+          borderTopEndRadius: 30,
+          borderTopLeftRadius: 30,
+        },
+        left: {
+          padding: 6,
+          borderBottomRightRadius: 30,
+          borderBottomLeftRadius: 0,
+          borderTopEndRadius: 30,
+          borderTopLeftRadius: 30,
+          lineHeight: 5
         }
       }}
       textStyle={{
         right: {
           color: '#000',
           fontFamily: 'Poppins-Regular',
-          fontSize: 15
+          fontSize: 15,
         },
         left: {
           fontFamily: 'Poppins-Regular',
@@ -74,7 +88,10 @@ export default class Chat extends React.Component {
       }}
       timeTextStyle={{
         right: {
-          color: '#000'
+          color: '#6b6b6b',
+        },
+        left: {
+          color: '#6b6b6b',
         }
       }}
       />
