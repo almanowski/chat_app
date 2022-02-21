@@ -1,6 +1,6 @@
 # Chat App
 
-Creating the 'Chat App' is part of my [CF Full-Stack Web Development Programm](https://careerfoundry.com/en/courses/become-a-web-developer/).
+Creating the 'Chat App' is part of my [CF Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/).
 
 <p>&nbsp;</p>
 
@@ -18,6 +18,19 @@ To build a chat app for mobile devices using React Native. The app will provide 
 <p>&nbsp;</p>
 
 ## 💻 Technologies Used
-* React ^17.0.2
+* React 17.0.1
 * React-Native 0.64.3
 * Expo ~44.0.0
+* Firebase ^8.10.1
+* Gifted Chat ^0.16.3
+
+<p>&nbsp;</p>
+
+## 👩‍💻 Installation
+
+1. Install expo globally `npm install --global expo-cli`
+2. Clone repo `git clone https://github.com/almanowski/chat_app.git`
+3. Install necessary dependency inside chat app directory `npm i`
+4. Download expo Go to your smartphone or use an iOS or Android emulator
+5. Start the server and get the app running `expo start` or `npm start`
+6. Open the app on your device or emulator
