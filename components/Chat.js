@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Platform, KeyboardAvoidingView, LogBox} from 'react-native';
-import {Bubble, GiftedChat, InputToolbar} from 'react-native-gifted-chat';
+import {View, Platform, KeyboardAvoidingView} from 'react-native';
+import {Bubble, GiftedChat, InputToolbar, MessageImage} from 'react-native-gifted-chat';
 import * as Font from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import MapView from 'react-native-maps';
+
+import CustomActions from './CustomActions';
 
 // import firebase/firestore
 const firebase = require('firebase');
@@ -26,13 +29,15 @@ export default class Chat extends React.Component {
     this.state = {
       messages: [],
       fontsLoaded: false,
-      uid: 0,
+      uid: null,
       user:{
         _id: '',
         name: '',
         avatar: '',
       },
       isConnected: false,
+      location: null,
+      image: null
     }
 
     // initialize app 
@@ -41,7 +46,7 @@ export default class Chat extends React.Component {
     }
   }
 
-  // load cutsom fonts from assets
+  // load custom fonts from assets
   async loadFonts() {
     await Font.loadAsync({
       // load poppins regular/400
@@ -144,11 +149,9 @@ export default class Chat extends React.Component {
         _id: data._id,
         text: data.text,
         createdAt: data.createdAt.toDate(),
-        user: {
-          _id: data.user._id,
-          name: data.user.name,
-          avatar: data.user.avatar
-        }
+        user: data.user,
+        image: data.image || null,
+        location: data.location || null,
       });
     });
     this.setState({
@@ -165,9 +168,11 @@ export default class Chat extends React.Component {
     
     this.referenceChatMessages.add({
       _id: message._id,
-      text: message.text,
+      text: message.text || '',
       createdAt: message.createdAt,
-      user: this.state.user
+      user: this.state.user,
+      location: message.location || null,
+      image: message.image || '',
     });
   }
 
@@ -219,10 +224,14 @@ export default class Chat extends React.Component {
           color: '#000',
           fontFamily: 'Poppins-Regular',
           fontSize: 15,
+          marginBottom: 0,
+          marginTop: 8,
         },
         left: {
           fontFamily: 'Poppins-Regular',
-          fontSize: 15
+          fontSize: 15,
+          marginBottom: 0,
+          marginTop: 8,
         }
       }}
       timeTextStyle={{
@@ -247,6 +256,39 @@ export default class Chat extends React.Component {
     }
   }
 
+  /* add action button that opens an action sheet with which users can access the photo roll, 
+     takeing photos and sending location */
+  renderCustomActions(props) {
+    return <CustomActions {...props} />;
+  }
+
+// apply style to map
+  renderCustomView (props) {
+    const {currentMessage} = props;
+    if (currentMessage.location) {
+      return (
+        <View style={{borderRadius: 20, overflow: "hidden", alignItems: 'center', marginTop: 3, marginBottom: 3, marginLeft: 3, marginRight: 3}}>
+          <MapView style={{width: 150, height: 100,}} showsUserLocation={true}
+            region={{latitude: currentMessage.location.latitude, longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.02866, longitudeDelta: 0.0821,}}
+          />
+        </View>
+      );
+    }
+    return null;
+  }
+
+  // apply style to image 
+  renderMessageImage (props) {
+    return (
+      <MessageImage
+      {...props}
+      imageStyle={{borderRadius: 20}}
+    />
+    )
+  }
+  
+
   render() {
     // selected color from Start
     const {bgColor} = this.props.route.params;
@@ -254,7 +296,9 @@ export default class Chat extends React.Component {
     return (
       <View style={{flex: 1, backgroundColor: bgColor}}>
         <GiftedChat renderBubble={this.renderBubble.bind(this)} showUserAvatar
+          renderMessageImage={this.renderMessageImage}
           renderInputToolbar={this.renderInputToolbar.bind(this)} renderUsernameOnMessage
+          renderActions={this.renderCustomActions.bind(this)} renderCustomView={this.renderCustomView}
           messages={this.state.messages} onSend={messages => this.onSend(messages)}
           user={{_id: this.state.user._id, name: this.state.name, avatar: this.state.user.avatar}} 
         />
