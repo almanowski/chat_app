@@ -1,6 +1,11 @@
 # Chat App
-
 Creating the 'Chat App' is part of my [CF Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/).
+
+<p>&nbsp;</p>
+
+<p align="center">
+    <img src="./assets/chat_app" alt="App demo gif" width="150"/>
+</p>
 
 <p>&nbsp;</p>
 
