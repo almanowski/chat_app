@@ -3,8 +3,10 @@ Creating the 'Chat App' is part of my [CF Full-Stack Web Development Program](ht
 
 <p>&nbsp;</p>
 
-<p align="center">
-    <img src="./assets/chat_app.gif" alt="App demo gif" width="150"/>
+<p float="left">
+    <img src="./assets/start.jpg" alt="Example image" width="250">
+    <img src="./assets/chat.jpg" alt="Example image" width="250">
+    <img src="./assets/actions.jpg" alt="Example image" width="250">
 </p>
 
 <p>&nbsp;</p>
